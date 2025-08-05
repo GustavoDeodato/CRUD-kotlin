@@ -2,6 +2,7 @@ package com.example.clientesapp.screens.cliente.componentes.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +24,10 @@ fun BarraDeTitulo (modifier: Modifier = Modifier
 ){
     TopAppBar(
         title = {
-            Row (modifier = Modifier .fillMaxWidth()){
+            Row (
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier .fillMaxWidth()
+            ){
                 Column {
                     Text(text = "Carlinhos")
                     Text(text = "Carlinhos.2050cavalos@email")

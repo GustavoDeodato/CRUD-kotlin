@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.clientesapp.screens.cliente.componentes.components.BarraDeTitulo
+import com.example.clientesapp.screens.cliente.componentes.components.BarraInferior
 import com.example.clientesapp.ui.theme.ClientesAppTheme
 
 @Composable
@@ -17,10 +19,10 @@ fun ListaDeClientes(modifier: Modifier = Modifier) {
     Scaffold (
 
         topBar = {
-            Text(text = "barra de titulo")
+            BarraDeTitulo()
         },
         bottomBar = {
-            Text(text = "barra inferior")
+            BarraInferior()
         },
         floatingActionButton = {
             Button(
