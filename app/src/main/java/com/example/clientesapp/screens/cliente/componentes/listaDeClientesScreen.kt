@@ -1,4 +1,4 @@
-package com.example.clientesapp.screens.cliente.componentes.components
+package com.example.clientesapp.screens.cliente.componentes
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
