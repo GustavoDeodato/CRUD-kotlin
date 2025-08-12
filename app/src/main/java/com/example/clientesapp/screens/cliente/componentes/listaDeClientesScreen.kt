@@ -1,21 +1,24 @@
 package com.example.clientesapp.screens.cliente.componentes
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.clientesapp.screens.cliente.componentes.New.ClienteForm
 import com.example.clientesapp.screens.cliente.componentes.components.BarraDeTitulo
 import com.example.clientesapp.screens.cliente.componentes.components.BarraInferior
+import com.example.clientesapp.screens.cliente.componentes.components.BotaoFlutuante
+import com.example.clientesapp.screens.cliente.componentes.components.Conteudo
 import com.example.clientesapp.ui.theme.ClientesAppTheme
 
 @Composable
 fun ListaDeClientes(modifier: Modifier = Modifier) {
+
+    var controleNavegacao = rememberNavController()
     Scaffold (
 
         topBar = {
@@ -25,18 +28,17 @@ fun ListaDeClientes(modifier: Modifier = Modifier) {
             BarraInferior()
         },
         floatingActionButton = {
-            Button(
-                onClick = {}
-            ) {
-                Text(text = "botao")
-            }
+          BotaoFlutuante()
         },
-        content = {
-            Column (
-                modifier = Modifier
-                    .padding(it)
-                    .fillMaxSize()
-            ){  }
+        content = { padding ->
+            NavHost(
+                navController = controleNavegacao,
+                startDestination = "Lista"
+            )
+            {
+                composable(route = "conteudo"){ Conteudo(padding) }
+                composable(route = "cadastro"){ ClienteForm(padding) }
+        }
         }
     )
 
