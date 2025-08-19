@@ -11,22 +11,35 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.clientesapp.model.Cliente
+import com.example.clientesapp.service.ClienteService
+import com.example.clientesapp.service.Conexao
 import com.example.clientesapp.ui.theme.ClientesAppTheme
 
 
 @Composable
 fun Conteudo(paddingValues: PaddingValues) {
+
+    val clienteApi = Conexao().getClienteService()
+    var clientes by remember { mutableStateOf(listOf<Cliente>()) }
     Column (
         modifier = Modifier.padding(paddingValues).fillMaxSize()
     ){
@@ -44,39 +57,80 @@ fun Conteudo(paddingValues: PaddingValues) {
                 text = "lista de clientes"
             )
         }
-        LazyColumn {
-            items(10){
-                Card (
-                    modifier = Modifier
-                        .padding(
-                            start = 8.dp,
-                            end = 8.dp,
-                            bottom = 8.dp
-                        )
-                        .fillMaxWidth()
-                        .height(80.dp)
-                ) {
-                    Row (
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxSize(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Column {
-                            Text(text = "Nome baronico")
-                            Text(text = "email@baronico.com")
-                        }
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = "delete"
-                        )
-                    }
-                }
+        LazyColumn (
+            contentPadding = PaddingValues(bottom = 80.dp)
+        ){
+            items(clientes){cliente ->
+
+                cardCliente( cliente, clienteApi)
             }
+
         }
     }
 }
+
+@Composable
+private fun cardCliente(
+    cliente: Cliente,
+    clienteApi: ClienteService
+) {
+    var mostrarConfirmarExclusao by remember { mutableStateOf(false) }
+
+    var mostrarConfirmarExclusao1 = mostrarConfirmarExclusao
+    Card(
+        modifier = Modifier
+            .padding(
+                start = 8.dp,
+                end = 8.dp,
+                bottom = 8.dp
+            )
+            .fillMaxWidth()
+            .height(80.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxSize(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text(text = "Nome Carlinhos ")
+                Text(text = "email@carlinhos.com")
+            }
+            IconButton(
+                onClick = {}
+            ) {
+
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "delete"
+                )
+            }
+        }
+
+    }
+    if (mostrarConfirmarExclusao1) {
+        AlertDialog(
+            onDismissRequest = {
+                mostrarConfirmarExclusao1 = false
+            },
+            dismissButton = {
+                mostrarConfirmarExclusao1 = false
+            },
+            confirmButton = {
+
+            },
+            title = {
+                Text(text = "Exclusão do Cliente")
+            },
+            text = {
+                Text(text = "confirmar a exclusão do sistema do cliente a baixo? \n\n${cliente.nome}")
+            }
+        )
+    }
+}
+
 @Composable
 @Preview
 private fun conteudoPreview(){

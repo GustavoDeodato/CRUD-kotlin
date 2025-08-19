@@ -37,7 +37,7 @@ fun ListaDeClientes(modifier: Modifier = Modifier) {
             )
             {
                 composable(route = "conteudo"){ Conteudo(padding) }
-                composable(route = "cadastro"){ ClienteForm(padding) }
+                composable(route = "cadastro"){ ClienteForm(padding, controleNavegacao) }
         }
         }
     )
